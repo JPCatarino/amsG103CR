@@ -7,7 +7,7 @@ import psycopg2
 baseDir = os.path.dirname(os.path.abspath(__file__))
 # Dict with the this app's configuration:
 config = {
-  "/":       {"tools.staticdir.root": baseDir},
+    "/":       {"tools.staticdir.root": baseDir},
     "/HTML": {"tools.staticdir.on": True, "tools.staticdir.dir": os.path.join(baseDir, "HTML")},
 
 }
@@ -76,6 +76,7 @@ class api(object):
         db_con.commit()
         curr.close()
         db_con.close()
+
 
 
 if __name__ == '__main__':
