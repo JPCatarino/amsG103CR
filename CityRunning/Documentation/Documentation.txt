@@ -1,0 +1,237 @@
+/*------------------------------------------------------------------
+Project:            Yorker
+Author:             Frank John
+Version:            1.3
+Created:            09/02/2017
+Last change:        26/04/2017
+-------------------------------------------------------------------*/
+
+
+Yorker- Clean Landing Page Template
+
+
+
+GENERAL INFO
+============
+
+Yorker is a clean multi-purpose landing page template ideal for startups, agencies, portfolios, as well as for promoting your services, 
+products and mobile apps. Built with Bootstrap 3, it is fully responsive and looks perfect on all major browsers, tablets and phones.
+
+
+Key Features:
+-------------
+
+ - 6 predefined layouts
+ - Fully Responsive
+ - Functioning contact form
+ - Spam protection by reCAPTCHA
+ - Clean & developer friendly code
+ - Free updates
+ - Free support
+
+
+
+ All images and plugins used in this template are FREE for personal and commercial use!
+
+
+
+
+
+INSTRUCTIONS
+============
+
+Changing logo
+-------------
+
+In order to change a logo, please open your index_*.html and find this line:
+
+<a class="navbar-brand" href="#home">Yorker</a>
+
+Change the "Yorker" caption to the name of your company and save the file.
+
+
+
+
+
+
+Setting up the Contact Form
+---------------------------
+
+This template contains a fully functioning PHP contact form with spam protection powered by reCaptcha. 
+
+Note: The contact form will not work in your local environment without a server that supports PHP. 
+
+In order to set up the contact form, please follow the steps below: 
+
+1. Open the mail/config.php file and fill out the required information: 
+
+ - reCaptcha Public ($publickey) and Private ($privatekey) keys.
+ These keys are required to make your reCaptcha work properly. Please go to https://www.google.com/recaptcha/admin/create if you don't have the keys yet.
+
+ - Sender name and email address ($mail_sender)
+ This is a name and email address you will see in the 'From:' line of new emails you will receive.
+
+ - Your email address ($to_email)
+ This is an email address new emails will be sent to.
+
+ - Email subject ($mail_subject)
+ This is a subject of new emails you will receive.
+
+2. Open your /index_*.html file and insert your reCaptcha Public key (see Step 1) at the end of this line:
+
+<div class="g-recaptcha" data-sitekey="YOUR_PUBLIC_KEY"></div>
+
+(e.g. <div class="g-recaptcha" data-sitekey="09sdv0sf9v0sdf9b0df9b09dfb"></div>).
+
+3. Save both files.
+
+
+Setting up the Map
+---------------------------
+
+Change the longitude and latitude in map.js file.
+
+
+Changing styles
+---------------
+
+If you are a novice developer, you can make necessary changes in the "assets/css/styles.css" file directly. 
+After changes are made, simply save the file and refresh the browser window to see the results.
+
+
+
+
+Use of Bootstrap components
+---------------------------
+
+You can use any of the original Bootstrap components as they are with no additional markup. 
+Some of the components have been modified for this template (e.g. navbar, buttons, dropdowns, etc.). Custom styles will apply automatically.
+
+
+Sources and Credits
+===================
+
+General
+-------
+
+1. Twitter Bootstrap
+
+URL:      http://getbootstrap.com/
+AUTHOR:   @mdo and @fat
+LICENSE:  MIT License
+
+2. Font Awesome
+
+URL:      http://fontawesome.io/
+AUTHOR:   Dave Gandy
+LICENSE:  MIT license
+
+
+3. Line icons
+
+URL: https://thesabbir.github.io/simple-line-icons/
+LICENSE: General
+
+
+
+JS Plugins
+----------
+
+1. Magnific Popup
+
+URL: http://dimsemenov.com/plugins/magnific-popup/
+AUTHOR:   Dmitry Semenov
+LICENSE:  General
+
+2. Waypoints
+
+URL:        http://imakewebthings.com/jquery-waypoints/
+AUTHOR:     I Make Web Things
+LICENSE:    MIT license
+
+3. Smoothscroll
+
+URL:        https://github.com/galambalazs/smoothscroll
+AUTHOR:     Balazs Galambosi, Patrick Brunner, Michael Herf
+LICENSE:    MIT license
+
+4. Isotope
+
+URL:        https://github.com/metafizzy/isotope
+AUTHOR:     desandro
+LICENSE:    MIT license
+
+5. Owl carousel
+
+URL:        http://owlgraphic.com/owlcarousel/
+AUTHOR:     Bartosz Wojciechowski
+LICENSE:    MIT license
+
+
+6. Images Loaded
+
+URL:        https://github.com/desandro/imagesloaded
+AUTHOR:     David DeSandro
+LICENSE:    MIT license
+
+
+7. Visible
+
+URL:        https://github.com/customd/jquery-visible
+AUTHOR:     Sam Sehnert
+LICENSE:    MIT license
+
+
+8. Stellar
+
+URL:        https://github.com/markdalgleish/stellar.js/
+AUTHOR:     Mark Dalgleish
+LICENSE:    MIT license
+
+
+9. Smooth Scroll
+
+URL:        https://gist.github.com/galambalazs/6477177
+AUTHOR:     Balázs Galambosi
+LICENSE:    MIT license
+
+
+10. Fitvids
+
+URL:        https://github.com/davatron5000/FitVids.js/
+AUTHOR:     Dave Rupert
+LICENSE:    MIT license
+
+
+
+reCAPTCHA
+---------
+
+Copyright (c) 2007 reCAPTCHA -- http://recaptcha.net
+
+AUTHORS: Mike Crawford
+         Ben Maurer
+
+
+Images
+------
+
+1) Wallpaper wide
+
+URL: http://wallpaperswide.com/
+
+2) Pixabay
+
+URL: https://pixabay.com/
+
+3) HD Wallpapers
+
+URL: http://www.hdwallpapers.in/
+
+
+
+
+
+
+Thanks for purchasing the "Yorker" template. Do not hesitate to contact us if you have any questions or suggestions regarding this item.
+

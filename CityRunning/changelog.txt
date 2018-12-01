@@ -1,0 +1,39 @@
+Changelog
+=========
+
+Version 1.0 - 11/02/2017
+
+ - Initial release
+
+Version 1.1 - 17/02/2017
+
+  * HTML Updated
+  * CSS Updated
+
+Version 1.2- 21/04/2017
+
+  * 2 New Demo Added(Business & Restaurant)
+  * HTML Updated
+  * CSS Updated
+  * New Plugins Added
+  * Documentation Updated
+
+Version 1.3- 22/04/2017
+
+ * JS plugins updated
+
+Version 1.4- 26/04/2017
+
+  * 2 New Demo Added
+  * HTML Updated
+  * CSS Updated
+  * New Plugins Added
+  * Documentation Updated
+
+Version 1.5- 01/06/2017
+ * 3 New Header Presentations Added
+ * Admin Template Added
+ * Coming Soon Page Added 
+
+Version 1.6 -16/06/2017
+*Admin Limited Offer Expired
