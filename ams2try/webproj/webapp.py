@@ -3,8 +3,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 import os
 from datetime import datetime
 import psycopg2
-from psycopg2 import Error
-import json
+
 
 
 class WebApp(object):
