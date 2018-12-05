@@ -1,0 +1,11 @@
+{% if user.is_authenticated %}
+
+{% else %}
+
+<span class="navbar-text">
+    <div class="col-md-10">
+        <a href="signup">Signup</a>
+    </div>
+</span>
+
+{% endif %}
