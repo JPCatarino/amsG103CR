@@ -72,6 +72,10 @@ class WebApp(object):
         db_con.commit()
         if typeu == 'Atleta':
             sql = "INSERT INTO atleta(username) VALUES ('"+usr +"')"
+        elif typeu == 'Organizador':
+            sql = "INSERT INTO organizador(username) VALUES ('"+usr +"')"
+        elif typeu == 'Patrocinador':
+            sql = "INSERT INTO patrocinador(username) VALUES ('"+usr +"')"
         cur.execute(sql)
         db_con.commit()
 
