@@ -16,7 +16,47 @@ class WebApp(object):
 
 ########################################################################################################################
 #   Utilities
+    def get_eventos(self,usr):
+        data=[]
 
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        if self.get_user()['type'] == 'Atleta':
+            sql1 = "select a_id from atleta where username = '" + usr+ "'"
+            cur.execute(sql1)
+            id_a=cur.fetchone()
+            sql2 = "select id_evento from atletaevento where a_id = '" + id_a+ "'" + "and estadopagamento='Pago'"
+            cur.execute(sql2)
+            id_event = cur.fetchone()
+            for e in id_event:
+                sql3 = "select * from evento where id_evento = '" + e + "'" + "and estado='Disponivel'"
+                cur.execute(sql3)
+                data+=[cur.fetchone]
+        elif self.get_user()['type'] == 'Organizador':
+            sql1 = "select o_id from organizador where username = '" + usr + "'"
+            cur.execute(sql1)
+            id_a = cur.fetchone()
+            sql2 = "select id_evento from organizadorevento where a_id = '" + id_a + "'"
+            cur.execute(sql2)
+            id_event = cur.fetchone()
+            for e in id_event:
+                sql3 = "select * from evento where id_evento = '" + e + "'" + "and estado='Disponivel' or estado = 'Pendente'"
+                cur.execute(sql3)
+                data += [cur.fetchone]
+        elif self.get_user()['type'] == 'Patrocinador':
+            sql1 = "select p_id from patrocinador where username = '" + usr + "'"
+            cur.execute(sql1)
+            id_a = cur.fetchone()
+            sql2 = "select id_evento,valorpatrocinado,estadopedido from patrocinadorevento where p_id = '" + id_a + "'"
+            cur.execute(sql2)
+            id_event = cur.fetchone()
+            for e in id_event:
+                sql3 = "select * from evento where id_evento = '" + e[0] + "'" + "and estado='Disponivel'"
+                cur.execute(sql3)
+                data += [cur.fetchone]
+
+        cur.close()
+        db_con.close()
     def set_user(self, username=None,type=None):
         if username == None or username == '':
             cherrypy.session['user'] = {'is_authenticated': False, 'username': '', 'type':'' }
@@ -64,22 +104,24 @@ class WebApp(object):
 
 
     def do_regDB(self,usr,pwd,mail,typeu):
-        db_con = self.db_connection()
-        sql = "INSERT INTO utilizador(username,pwd,typeu,mail) VALUES ('"+usr +"','" + pwd+"','"+typeu+"','"+mail+"')"
-        cur = db_con.cursor()
-        cur.execute(sql)
-        db_con.commit()
-        if typeu == 'Atleta':
-            sql = "INSERT INTO atleta(username) VALUES ('"+usr +"')"
-        elif typeu == 'Organizador':
-            sql = "INSERT INTO organizador(username) VALUES ('"+usr +"')"
-        elif typeu == 'Patrocinador':
-            sql = "INSERT INTO patrocinador(username) VALUES ('"+usr +"')"
-        cur.execute(sql)
-        db_con.commit()
+        if usr is not None or usr != '' and pwd is not None or pwd != '' and mail is not None or mail != '' and \
+                typeu is not None or typeu != '':
+            db_con = self.db_connection()
+            sql = "INSERT INTO utilizador(username,pwd,typeu,mail) VALUES ('"+usr +"','" + pwd+"','"+typeu+"','"+mail+"')"
+            cur = db_con.cursor()
+            cur.execute(sql)
+            db_con.commit()
+            if typeu == 'Atleta':
+                sql = "INSERT INTO atleta(username) VALUES ('"+usr +"')"
+            elif typeu == 'Organizador':
+                sql = "INSERT INTO organizador(username) VALUES ('"+usr +"')"
+            elif typeu == 'Patrocinador':
+                sql = "INSERT INTO patrocinador(username) VALUES ('"+usr +"')"
+            cur.execute(sql)
+            db_con.commit()
 
-        cur.close()
-        db_con.close()
+            cur.close()
+            db_con.close()
 
     ########################################################################################################################
 #   Controllers
@@ -91,6 +133,15 @@ class WebApp(object):
             'year': datetime.now().year,
         }
         return self.render('index.html', tparams)
+
+    @cherrypy.expose
+    def meventosa(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+
+        return self.render('meventosa.html', tparams)
 
 
     @cherrypy.expose
@@ -136,14 +187,7 @@ class WebApp(object):
                 }
                 return self.render('login.html', tparams)
             else:
-                if self.get_user()['type'] == "Atleta":
-                    raise cherrypy.HTTPRedirect("/Atleta")
-                elif self.get_user()['type']== "Organizador":
-                    raise cherrypy.HTTPRedirect("/Organizador")
-                elif self.get_user()['type'] == "Patrocinador":
-                    raise cherrypy.HTTPRedirect("/Patrocinador")
-                elif self.get_user()['type'] == "Admin":
-                    raise cherrypy.HTTPRedirect("/Admin")
+                raise cherrypy.HTTPRedirect("/")
     @cherrypy.expose
     def logout(self):
         self.set_user()
@@ -151,8 +195,8 @@ class WebApp(object):
 
 
     @cherrypy.expose
-    def signup(self,usr=None,pwd=None,mail=None,typeu=None):
-        if usr == None or usr == '':
+    def signup(self, usr=None, pwd=None, mail=None, typeu=None):
+        if usr is None or usr == '':
             tparams = {
                 'title': 'SignUp',
                 'errors': False,
@@ -161,7 +205,7 @@ class WebApp(object):
             }
             return self.render('signup.html', tparams)
         else:
-            self.do_regDB(usr,pwd,mail,typeu)
+            self.do_regDB(usr, pwd, mail, typeu)
             raise cherrypy.HTTPRedirect("/")
 
 

@@ -1,4 +1,4 @@
-
+{%  if user.type == "Organizador" %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -25,14 +25,14 @@
 
       <div class="collapse navbar-collapse" id="navbarDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="Meventos">Meus Eventos</a>
+          <li class="nav-item">
+            <a class="nav-link" href="meventosa">Meus Eventos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="eventos">Eventos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="Historico">Historico</a>
+            <a class="nav-link" href="historicop">Historico</a>
           </li>
 
         </ul>
@@ -46,7 +46,7 @@
     <main role="main">
         <div class="container body-content">
             <p></p>
-            {% block content %} {% endblock %}
+            Olá {{user.username}}, seja bem vindo à sua página
         </div> <!-- /container -->
     </main>
 
@@ -64,3 +64,4 @@
 
   </body>
 </html>
+{% endif %}

@@ -1,4 +1,5 @@
 
+{%  if user.type == "Atleta" %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -25,14 +26,14 @@
 
       <div class="collapse navbar-collapse" id="navbarDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="Meventos">Meus Eventos</a>
+          <li class="nav-item">
+            <a class="nav-link" href="meventosa">Meus Eventos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="eventos">Eventos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="Historico">Historico</a>
+            <a class="nav-link" href="historicoa">Historico</a>
           </li>
 
         </ul>
@@ -43,13 +44,12 @@
 
     </nav>
 
-    <main role="main">
+   <main role="main">
         <div class="container body-content">
             <p></p>
             {% block content %} {% endblock %}
         </div> <!-- /container -->
     </main>
-
     <footer>
         <hr />
         <p>&copy; {{ year }} - AMS103</p>
@@ -63,4 +63,5 @@
     <script src="static/scripts/bootstrap.min.js"></script>
 
   </body>
-</html>
+{% endif %}
+
