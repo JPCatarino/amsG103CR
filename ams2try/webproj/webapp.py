@@ -17,11 +17,11 @@ class WebApp(object):
 ########################################################################################################################
 #   Utilities
 
-    def set_user(self, username=None):
-        if username == None:
-            cherrypy.session['user'] = {'is_authenticated': False, 'username': ''}
+    def set_user(self, username=None,type=None):
+        if username == None or username == '':
+            cherrypy.session['user'] = {'is_authenticated': False, 'username': '', 'type':'' }
         else:
-            cherrypy.session['user'] = {'is_authenticated': True, 'username': username}
+            cherrypy.session['user'] = {'is_authenticated': True, 'username': username , 'type': type}
 
 
     def get_user(self):
@@ -47,14 +47,14 @@ class WebApp(object):
     def do_authenticationDB(self, usr, pwd):
         user = self.get_user()
         db_con = self.db_connection()
-        sql = "select pwd from utilizador where username = '" + usr+ "'"
+        sql = "select pwd,typeu from utilizador where username = '" + usr+ "'"
         cur = db_con.cursor()
         cur.execute(sql)
         try:
             row = cur.fetchone()
             if row is not None:
                 if row[0] == pwd:
-                    self.set_user(usr)
+                    self.set_user(usr,row[1])
         except psycopg2.Error as e:
             print(e)
 
@@ -136,9 +136,14 @@ class WebApp(object):
                 }
                 return self.render('login.html', tparams)
             else:
-                raise cherrypy.HTTPRedirect("/")
-
-
+                if self.get_user()['type'] == "Atleta":
+                    raise cherrypy.HTTPRedirect("/Atleta")
+                elif self.get_user()['type']== "Organizador":
+                    raise cherrypy.HTTPRedirect("/Organizador")
+                elif self.get_user()['type'] == "Patrocinador":
+                    raise cherrypy.HTTPRedirect("/Patrocinador")
+                elif self.get_user()['type'] == "Admin":
+                    raise cherrypy.HTTPRedirect("/Admin")
     @cherrypy.expose
     def logout(self):
         self.set_user()
@@ -147,7 +152,7 @@ class WebApp(object):
 
     @cherrypy.expose
     def signup(self,usr=None,pwd=None,mail=None,typeu=None):
-        if usr == None:
+        if usr == None or usr == '':
             tparams = {
                 'title': 'SignUp',
                 'errors': False,
