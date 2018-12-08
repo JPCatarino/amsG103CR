@@ -1,0 +1,69 @@
+{% extends "organizador.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="eventForm">
+            <form action="criarevento" method="post" class="form-horizontal">
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div class="form-group">
+                    <label for="nome_evento">Nome Evento</label>
+                    <div class="col-md-10">
+                        <input id="id_nomeevento" maxlength="254" name="nomeev" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_data">Data(dd-mm-aaaa)</label>
+                    <div class="col-md-10">
+                        <input id="id_data" name="data" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_local">Local</label>
+                    <div class="col-md-10">
+                        <input id="id_local" name="local" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_hora">Hora</label>
+                    <div class="col-md-10">
+                        <input id="id_hora" name="hora" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_nmax">Número máximo de participantes</label>
+                    <div class="col-md-10">
+                        <input id="id_nmax" name="nmax" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_insc">Valor Inscrição</label>
+                    <div class="col-md-10">
+                        <input id="id_insc" name="insc" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                </div>
+                {% if errors %}
+                <p class="validation-summary-errors">An error occured please repeat</p>
+                {% endif %}
+            </form>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section id="socialLoginForm"></section>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="static/scripts/jquery.validate.min.js"></script>
+{% endblock %}

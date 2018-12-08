@@ -29,7 +29,7 @@
             <a class="nav-link" href="meventoso">Meus Eventos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="eventos">Eventos</a>
+            <a class="nav-link" href="criarevento">Criar Evento</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="historicoo">Historico</a>
@@ -46,7 +46,7 @@
     <main role="main">
         <div class="container body-content">
             <p></p>
-            Olá {{user.username}}, seja bem vindo à sua página
+            {% block content %} {% endblock %}
         </div> <!-- /container -->
     </main>
 

@@ -16,47 +16,91 @@ class WebApp(object):
 
 ########################################################################################################################
 #   Utilities
-    def get_eventos(self,usr):
-        data=[]
+    def get_userid(self):
 
         db_con = self.db_connection()
         cur = db_con.cursor()
         if self.get_user()['type'] == 'Atleta':
-            sql1 = "select a_id from atleta where username = '" + usr+ "'"
+            sql1 = "select a_id from atleta where username = '" + self.get_user()['username'] + "'"
             cur.execute(sql1)
-            id_a=cur.fetchone()
-            sql2 = "select id_evento from atletaevento where a_id = '" + id_a+ "'" + "and estadopagamento='Pago'"
-            cur.execute(sql2)
-            id_event = cur.fetchone()
-            for e in id_event:
-                sql3 = "select * from evento where id_evento = '" + e + "'" + "and estado='Disponivel'"
-                cur.execute(sql3)
-                data+=[cur.fetchone]
         elif self.get_user()['type'] == 'Organizador':
-            sql1 = "select o_id from organizador where username = '" + usr + "'"
+            sql1 = "select o_id from organizador where username = '" + self.get_user()['username'] + "'"
             cur.execute(sql1)
-            id_a = cur.fetchone()
-            sql2 = "select id_evento from organizadorevento where a_id = '" + id_a + "'"
-            cur.execute(sql2)
-            id_event = cur.fetchone()
-            for e in id_event:
-                sql3 = "select * from evento where id_evento = '" + e + "'" + "and estado='Disponivel' or estado = 'Pendente'"
-                cur.execute(sql3)
-                data += [cur.fetchone]
         elif self.get_user()['type'] == 'Patrocinador':
-            sql1 = "select p_id from patrocinador where username = '" + usr + "'"
+            sql1 = "select p_id from patrocinador where username = '" + self.get_user()['username'] + "'"
             cur.execute(sql1)
-            id_a = cur.fetchone()
-            sql2 = "select id_evento,valorpatrocinado,estadopedido from patrocinadorevento where p_id = '" + id_a + "'"
-            cur.execute(sql2)
-            id_event = cur.fetchone()
-            for e in id_event:
-                sql3 = "select * from evento where id_evento = '" + e[0] + "'" + "and estado='Disponivel'"
-                cur.execute(sql3)
-                data += [cur.fetchone]
+        idu = cur.fetchone()
 
         cur.close()
         db_con.close()
+        return idu[0]
+
+    def criarevent(self,nomeev,data,local,hora,nmax,insc):
+        try:
+            if (nomeev != '' or nomeev is not None) and (data != '' or data is not None) and (local != '' or local is not None)\
+                    and (hora != '' or hora is not None) and (nmax != '' or nmax is not None) and (insc != '' or insc is not None):
+                id_o = self.get_userid()
+                db_con = self.db_connection()
+                cur = db_con.cursor()
+                sql = "INSERT INTO evento(nomeevent,datae,hora,locale,nmaxp,valorinsc,estado) VALUES ('" + nomeev + "','" + data + "','" + hora + "','" + local + "',"+str(nmax)+","+ str(insc)+ ",'"+'pendente'+"')"
+                cur.execute(sql)
+                db_con.commit()
+                sql2 = "select id_evento from evento where nomeevent = '" + nomeev+ "'"
+                cur.execute(sql2)
+                id_e = cur.fetchone()
+                sql3 = "INSERT INTO organizadorevento(o_id,id_evento) VALUES (" + str(id_o) + "," + str(id_e[0]) + ")"
+                cur.execute(sql3)
+                db_con.commit()
+        except psycopg2.Error as e:
+            return e
+        cur.close()
+        db_con.close()
+        return "no error"
+
+    def get_eventos(self,usr):
+
+        if self.get_user()['type'] == 'Atleta':
+            id_a = self.get_userid()
+            db_con = self.db_connection()
+            cur = db_con.cursor()
+            sql2 = "select id_evento from atletaevento where a_id = " + str(id_a) + " and estadopagamento='Pago'"
+            cur.execute(sql2)
+            id_event = cur.fetchone()
+
+            for e in id_event:
+                sql3 = "select * from evento where id_evento = " + str(e[0]) + " and estado='Disponivel'"
+                cur.execute(sql3)
+                data = cur.fetchone()
+                cherrypy.session['event'] +=[data]
+        elif self.get_user()['type'] == 'Organizador':
+            id_o = self.get_userid()
+            db_con = self.db_connection()
+            cur = db_con.cursor()
+            sql2 = "select id_evento from organizadorevento where o_id = " + str(id_o)
+            cur.execute(sql2)
+            id_event = cur.fetchone()
+            for e in id_event:
+                sql3 = "select * from evento where id_evento = " + str(e[0])  + " and estado='Disponivel' or estado = 'Pendente'"
+                cur.execute(sql3)
+                data = cur.fetchone()
+                cherrypy.session['event'] += [data]
+        elif self.get_user()['type'] == 'Patrocinador':
+            id_p = self.get_userid()
+            db_con = self.db_connection()
+            cur = db_con.cursor()
+            sql2 = "select id_evento,valorpatrocinado,estadopedido from patrocinadorevento where p_id =" + id_p
+            cur.execute(sql2)
+            id_event = cur.fetchone()
+            for e in id_event:
+                sql3 = "select * from evento where id_evento = " + str(e[0]) + " and estado='Disponivel'"
+                cur.execute(sql3)
+                data = cur.fetchone()
+                cherrypy.session['event'] += [data]
+
+        cur.close()
+        db_con.close()
+        return cherrypy.session['event']
+
     def set_user(self, username=None,type=None):
         if username == None or username == '':
             cherrypy.session['user'] = {'is_authenticated': False, 'username': '', 'type':'' }
@@ -81,7 +125,7 @@ class WebApp(object):
             return conn
         except psycopg2.Error as e:
             print(e)
-        return None
+
 
 
     def do_authenticationDB(self, usr, pwd):
@@ -134,6 +178,30 @@ class WebApp(object):
         }
         return self.render('index.html', tparams)
 
+    @cherrypy.expose
+    def criarevento(self,nomeev=None,data=None,local=None,hora=None,nmax=None,insc=None):
+
+        if nomeev == '' or nomeev is None:
+            tparams = {
+                'title': 'CriarEvento',
+                'user': self.get_user(),
+                'year': datetime.now().year,
+                'errors': False,
+            }
+            return self.render('criarevento.html', tparams)
+        else:
+            if self.get_user()['is_authenticated']:
+               error = self.criarevent(nomeev,data,local,hora,nmax,insc)
+               if error == "no error":
+                   raise cherrypy.HTTPRedirect("/Organizador")
+               else:
+                   tparams = {
+                       'title': 'CriarEvento',
+                       'user': self.get_user(),
+                       'year': datetime.now().year,
+                       'errors': True,
+                   }
+                   return self.render('criarevento.html', tparams)
     @cherrypy.expose
     def meventosa(self):
         tparams = {
