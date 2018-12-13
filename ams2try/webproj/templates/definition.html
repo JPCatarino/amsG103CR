@@ -1,0 +1,237 @@
+{% extends "organizador.html" %}
+{% extends "atleta.html" %}
+{% extends "pratocinador.html" %}
+{% block content %}
+
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewpor" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="static/assets/images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="static/assets/images/favicon/favicon.ico" type="image/x-icon">
+    <title>CityRunning</title>
+    <!-- BOOTSTRAP CSS  -->
+    <link href="static/assets/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- CUSTOM STYLE CSS-->
+    <link href="static/assets/css/style.css" rel="stylesheet">
+    <link href="static/assets/css/shortcodes/shortcodes.css" rel="stylesheet">
+    <!-- ANIMATE CSS-->  
+    <link href="static/assets/plugins/animate/animate.min.css" rel="stylesheet">
+    <!-- CSS FOR COLOR SWITCHER -->
+    <link rel="stylesheet" href="static/assets/css/switcher/switcher.css">
+    <link rel="stylesheet" href="static/assets/css/switcher/style1.css" id="colors">
+    <!--Line Icons--> 
+    <link rel="stylesheet" href="static/assets/plugins/line-icons/line-icons.css" type="text/css">
+    <link rel="stylesheet" href="static/assets/plugins/line-icons-pro/line-icons-pro.css" type="text/css">
+    <!-- OWL CAROUSEL -->
+    <link href="static/assets/plugins/owl-carousel/owl.carousel.css" rel="stylesheet" type="text/css">
+    <link href="static/assets/plugins/owl-carousel/owl.theme.css" rel="stylesheet" type="text/css">
+    <!-- MAGNIFIC POPUP-->
+    <link href="static/assets/plugins/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+    <!--CUSTOM FONTS-->
+    <link href="static/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="static/assets/plugins/line-icons/line-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Merienda:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+  </head>
+  <body data-spy="scroll" data-target=".navbar" data-offset="71">
+    <!-- WRAPPER
+      ============================== -->
+    <div class="wrapper">
+      <!-- NAVBAR
+        ============================== -->
+       <nav class="navbar navbar-default navbar-menu navbar-fixed-top js-navbar-top js-toggleClass">
+                    <div class="container">
+                      <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/">
+                          <h2><span class="logo-span"></span>My Account</h2>
+                        </a>
+                      </div>
+                      <div id="navbar" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right ">
+                          <li><a href="#AlterarMail">Alterar Email</a></li>
+                          <li><a href="#AlterarUsername">Alterar Username</a></li>
+                          <li><a href="#AlterarPassword">Alterar Password</a></li>
+                        </ul>
+                      </div>
+                      <!--/.nav-collapse -->
+                    </div>
+                </nav>
+      
+      <!-- Alterar Email
+        =================================== -->
+      <div id="AlterarMail" class="p-top-90 p-bot-90 light-gray-bg2">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 center-block text-center wow fadeIn" data-wow-delay="0.30s">
+              <h2 class="about-heading bold-font">Alterar Email</h2>
+              <div class="border-strip margin-bottom-40"></div>
+              <div class="form-group">
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Email Atual</h5>
+                      <input id="id_mail" maxlength="254" placeholder="Email" name="mail" type="text bold-font" autofocus="">
+                    </div>
+
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Novo Email</h5>
+                      <input id="id_mail" maxlength="254" name="newmail" placeholder="New Email" type="text bold-font" autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="submit" value="Alterar" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                     <div class="panel-body">
+                        {% if errors and title=="Username Change" %}
+                        <p class="validation-summary-errors"><b>Please enter a correct Email</b></p>
+                        {% endif %}
+                      </div>
+                </div>
+        </div>
+      </div>
+
+      <!-- Alterar Username
+        =================================== -->
+      <div id="AlterarUsername" class="p-top-90 p-bot-90 light-gray-bg2">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 center-block text-center wow fadeIn" data-wow-delay="0.30s">
+              <h2 class="about-heading bold-font">Alterar Username</h2>
+              <div class="border-strip margin-bottom-40"></div>
+              <div class="form-group">
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Username Atual</h5>
+                      <input id="id_mail" maxlength="254" name="username" placeholder="Username" type="text bold-font" autofocus="">
+                    </div>
+
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Novo Username</h5>
+                      <input id="id_mail" maxlength="254" placeholder="New Username" name="newusername" type="text bold-font" autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="submit" value="Alterar" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                      {% if errors and title=="Username Change" %}
+                      <p class="validation-summary-errors"><b>Please enter a correct Username</b></p>
+                      {% endif %}
+                    </div>
+                </div>
+        </div>
+      </div>
+
+      <!-- Alterar Password
+        =================================== -->
+      <div id="AlterarPassword" class="p-top-90 p-bot-90 light-gray-bg2">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 center-block text-center wow fadeIn" data-wow-delay="0.30s">
+              <h2 class="about-heading bold-font">Alterar Password</h2>
+              <div class="border-strip margin-bottom-40"></div>
+              <div class="form-group">
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                         <h5 class="about-heading bold-font">Password Atual</h5>
+                        <input id="id_password" maxlength="254" placeholder="Password" name="password" type="text bold-font">
+                    </div>
+
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                        <h5 class="about-heading bold-font">Definir Nova Password</h5>
+                        <input id="id_password" maxlength="254" name="newpassword" placeholder="New Password" type="text bold-font">
+                    </div>
+
+                    <div class="panel-body">
+                      {% if errors and title=="Password Change" %}
+                      <p class="validation-summary-errors"><b>Please enter a correct password.</b></p>
+                      {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="submit" value="Alterar" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+        </div>
+      </div>
+      
+
+      <!-- SCROLLTOP -->
+      <div class="scroll-up">
+        <a href="#totop"><i class="fa fa-angle-up"></i></a>
+      </div>
+    </div>
+    <!--End Wrapper--> 
+    <!-- END OF STYLE SWITCHER -->       
+    <!-- PRELOADER
+      ============================== --> 
+    <div id="preloader">
+      <div id="status">&nbsp;</div>
+    </div>
+    <!-- JAVASCRIPT
+      ================================================== -->
+    <!-- Jquery--> 
+    <script src="static/assets/js/jquery.js"></script> 
+    <!-- Bootstrap Jquery--> 
+    <script src="static/assets/js/bootstrap/js/bootstrap.min.js"></script> 
+    <!-- Jquery Easing--> 
+    <script src="static/assets/js/jquery.easing.min.js"></script>
+    <!-- Wow Animation -->
+    <script src="static/assets/plugins/wow/wow.min.js"></script>  
+    <!-- Smooth Scroll--> 
+    <script type="text/javascript" src="static/assets/plugins/SmoothScroll/SmoothScroll.js"></script>
+    <!-- Stellar--> 
+    <script type="text/javascript" src="static/assets/plugins/stellar/jquery.stellar.min.js"></script>
+    <!-- Waypoint and Counters--> 
+    <script type="text/javascript" src="static/assets/plugins/counter/waypoints.min.js"></script> 
+    <script type="text/javascript" src="static/assets/plugins/counter/jquery.counterup.min.js"></script> 
+    <!--Isotope-->
+    <script type="text/javascript" src="static/assets/plugins/isotope/isotope.pkgd.min.js"></script>
+    <!--Magnific Popup-->
+    <script type="text/javascript" src="static/assets/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <!--Images Load-->
+    <script type="text/javascript" src="static/assets/plugins/imagesloaded/imagesloaded.pkgd.js"></script>
+    <!-- Owl Carousel--> 
+    <script type="text/javascript" src="static/assets/plugins/owl-carousel/owl.carousel.min.js"></script> 
+    <!-- NIVO LIGHTBOX--> 
+    <script type="text/javascript" src="static/assets/plugins/nivo-lightbox/nivo-lightbox.js"></script>    
+    <!--Visible-->
+    <script type="text/javascript" src="static/assets/plugins/visible/visible.js"></script>
+    <!--Fitvids-->
+    <script type="text/javascript" src="static/assets/plugins/fitvids/fitvids.js"></script>
+    <!-- Google Maps--> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl-EDTJ5_uU3zBIX7-wNTu-qSZr1DO5Dw"></script> 
+    <script type="text/javascript" src="static/assets/js/map.js"></script>
+    <!-- Recaptcha--> 
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- Contact--> 
+    <script src="static/assets/js/contact.js"></script>
+    <!-- switcher js -->
+    <script src="static/assets/js/switcher.js"></script>     
+    <!--Custom JS-->
+    <script src="static/assets/js/custom.js"></script>
+    <script>
+      new WOW().init();
+    </script>
+  </body>
+</html>
+{% endblock %}
+
+{% block scripts %}
+<script src="static/scripts/jquery.validate.min.js"></script>
+{% endblock %}

@@ -35,7 +35,7 @@ class WebApp(object):
         db_con.close()
         return idu[0]
 
-    def criarevent(self,nomeev,data,local,hora,nmax,insc):
+    def criarevento(self,nomeev,data,local,hora,nmax,insc):
         try:
             if (nomeev != '' or nomeev is not None) and (data != '' or data is not None) and (local != '' or local is not None)\
                     and (hora != '' or hora is not None) and (nmax != '' or nmax is not None) and (insc != '' or insc is not None):
@@ -179,6 +179,14 @@ class WebApp(object):
         return self.render('index.html', tparams)
 
     @cherrypy.expose
+    def noticias(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('noticias.html', tparams)
+
+    @cherrypy.expose
     def criarevento(self,nomeev=None,data=None,local=None,hora=None,nmax=None,insc=None):
 
         if nomeev == '' or nomeev is None:
@@ -202,6 +210,7 @@ class WebApp(object):
                        'errors': True,
                    }
                    return self.render('criarevento.html', tparams)
+    
     @cherrypy.expose
     def meventosa(self):
         tparams = {
@@ -210,29 +219,6 @@ class WebApp(object):
         }
 
         return self.render('meventosa.html', tparams)
-
-
-    @cherrypy.expose
-    def about(self):
-        tparams = {
-            'title': 'About',
-            'message': 'Your application description page.',
-            'user': self.get_user(),
-            'year': datetime.now().year,
-        }
-        return self.render('about.html', tparams)
-
-
-    @cherrypy.expose
-    def contact(self):
-        tparams = {
-            'title': 'Contact',
-            'message': 'Your contact page.',
-            'user': self.get_user(),
-            'year': datetime.now().year,
-        }
-        return self.render('contact.html', tparams)
-
 
     @cherrypy.expose
     def login(self, username=None, password=None):
@@ -256,6 +242,8 @@ class WebApp(object):
                 return self.render('login.html', tparams)
             else:
                 raise cherrypy.HTTPRedirect("/")
+    
+    
     @cherrypy.expose
     def logout(self):
         self.set_user()
@@ -275,8 +263,6 @@ class WebApp(object):
         else:
             self.do_regDB(usr, pwd, mail, typeu)
             raise cherrypy.HTTPRedirect("/")
-
-
 
 
     @cherrypy.expose
