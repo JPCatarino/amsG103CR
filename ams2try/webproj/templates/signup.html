@@ -1,36 +1,101 @@
-{% extends "index.html" %}
-
 {% block content %}
 
-<h2>{{ title }}</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="SignUp">
-            <form action="signup" method="post" class="form-horizontal">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div class="form-group">
-                    <label for="id_mail">Email</label>
-                    <div class="col-md-10">
-                        <input id="id_mail" maxlength="254" name="mail" type="text">
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewpor" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="static/assets/images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="static/assets/images/favicon/favicon.ico" type="image/x-icon">
+    <title>CityRunning</title>
+    <!-- BOOTSTRAP CSS  -->
+    <link href="static/assets/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- CUSTOM STYLE CSS-->
+    <link href="static/assets/css/style.css" rel="stylesheet">
+    <link href="static/assets/css/shortcodes/shortcodes.css" rel="stylesheet">
+    <!-- ANIMATE CSS-->  
+    <link href="static/assets/plugins/animate/animate.min.css" rel="stylesheet">
+    <!-- CSS FOR COLOR SWITCHER -->
+    <link rel="stylesheet" href="static/assets/css/switcher/switcher.css">
+    <link rel="stylesheet" href="static/assets/css/switcher/style1.css" id="colors">
+    <!--Line Icons--> 
+    <link rel="stylesheet" href="static/assets/plugins/line-icons/line-icons.css" type="text/css">
+    <link rel="stylesheet" href="static/assets/plugins/line-icons-pro/line-icons-pro.css" type="text/css">
+    <!-- OWL CAROUSEL -->
+    <link href="static/assets/plugins/owl-carousel/owl.carousel.css" rel="stylesheet" type="text/css">
+    <link href="static/assets/plugins/owl-carousel/owl.theme.css" rel="stylesheet" type="text/css">
+    <!-- MAGNIFIC POPUP-->
+    <link href="static/assets/plugins/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+    <!--CUSTOM FONTS-->
+    <link href="static/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="static/assets/plugins/line-icons/line-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Merienda:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+  </head>
+  <body data-spy="scroll" data-target=".navbar" data-offset="71">
+    <!-- WRAPPER
+      ============================== -->
+    <div class="wrapper">
+      <!-- NAVBAR
+        ============================== -->
+       <nav class="navbar navbar-default navbar-menu navbar-fixed-top js-navbar-top js-toggleClass">
+                    <div class="container">
+                      <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                         <a class="navbar-brand" href="/">
+                          <h2><span class="logo-span"></span>Back</h2>
+                        </a>
+                      </div>
+                      <!--/.nav-collapse -->
                     </div>
-                </div>
+                </nav>
+     
+      <!-- LogIn
+        =================================== -->
+      <div id="AlterarMail" class="p-top-90 p-bot-90 light-gray-bg2">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 center-block text-center wow fadeIn" data-wow-delay="0.30s">
+              <h2 class="about-heading bold-font">SignUp</h2>
+              <div class="border-strip margin-bottom-40"></div>
+              <div class="form-group">
+                <section id="loginForm">
+                <form action="login" method="post" class="form-horizontal">
+                  <h4>Use a local account to log in.</h4>
+                  <hr />
+                
                 <div class="form-group">
-                    <label for="id_username">Username</label>
-                    <div class="col-md-10">
-                        <input id="id_username" maxlength="254" name="usr" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="id_password">Password</label>
-                    <div class="col-md-10">
-                        <input id="id_password" name="pwd" type="password">
+                    <h5 for ="id_mail" class="about-heading bold-font">Email</h5>
+                    <div class="col-md-offset-3 col-md-6">
+                        <input id="id_mail" maxlength="254" name="username" type="text bold-font">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="id_type">Tipo de Conta</label>
-                    <div class="col-md-10">
+                    <h5 for ="id_username" class="about-heading bold-font">Username</h5>
+                    <div class="col-md-offset-3 col-md-6">
+                        <input id="id_username" name="password" type="password bold-font">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h5 for ="id_password" class="about-heading bold-font">Password</h5>
+                    <div class="col-md-offset-3 col-md-6">
+                        <input id="id_password" name="password" type="password bold-font">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h5 for ="id_type" class="about-heading bold-font">Tipo de Conta</h5>
+                    <div class="col-md-offset-3 col-md-6">
                         <select name="typeu">
                           <option value="Atleta">Atleta</option>
                           <option value="Patrocinador">Patrocinador</option>
@@ -39,26 +104,81 @@
 
                     </div>
                 </div>
+                
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
+                    <div class="col-md-offset-3 col-md-6">
                         <input type="submit" value="SignUp" class="btn btn-default" />
                     </div>
                 </div>
-
                 {% if errors %}
-                <p class="validation-summary-errors">Please enter a correct user name and password.</p>
+                <p class="validation-summary-errors">Please enter a correct user name and password</p>
                 {% endif %}
             </form>
         </section>
+                </div>
+        </div>
+      </div>
+      <!-- SCROLLTOP -->
+      <div class="scroll-up">
+        <a href="#totop"><i class="fa fa-angle-up"></i></a>
+      </div>
     </div>
-    <div class="col-md-4">
-        <section id="socialSignUp"></section>
+    <!--End Wrapper--> 
+    <!-- END OF STYLE SWITCHER -->       
+    <!-- PRELOADER
+      ============================== --> 
+    <div id="preloader">
+      <div id="status">&nbsp;</div>
     </div>
-</div>
-
+    <!-- JAVASCRIPT
+      ================================================== -->
+    <!-- Jquery--> 
+    <script src="static/assets/js/jquery.js"></script> 
+    <!-- Bootstrap Jquery--> 
+    <script src="static/assets/js/bootstrap/js/bootstrap.min.js"></script> 
+    <!-- Jquery Easing--> 
+    <script src="static/assets/js/jquery.easing.min.js"></script>
+    <!-- Wow Animation -->
+    <script src="static/assets/plugins/wow/wow.min.js"></script>  
+    <!-- Smooth Scroll--> 
+    <script type="text/javascript" src="static/assets/plugins/SmoothScroll/SmoothScroll.js"></script>
+    <!-- Stellar--> 
+    <script type="text/javascript" src="static/assets/plugins/stellar/jquery.stellar.min.js"></script>
+    <!-- Waypoint and Counters--> 
+    <script type="text/javascript" src="static/assets/plugins/counter/waypoints.min.js"></script> 
+    <script type="text/javascript" src="static/assets/plugins/counter/jquery.counterup.min.js"></script> 
+    <!--Isotope-->
+    <script type="text/javascript" src="static/assets/plugins/isotope/isotope.pkgd.min.js"></script>
+    <!--Magnific Popup-->
+    <script type="text/javascript" src="static/assets/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <!--Images Load-->
+    <script type="text/javascript" src="static/assets/plugins/imagesloaded/imagesloaded.pkgd.js"></script>
+    <!-- Owl Carousel--> 
+    <script type="text/javascript" src="static/assets/plugins/owl-carousel/owl.carousel.min.js"></script> 
+    <!-- NIVO LIGHTBOX--> 
+    <script type="text/javascript" src="static/assets/plugins/nivo-lightbox/nivo-lightbox.js"></script>    
+    <!--Visible-->
+    <script type="text/javascript" src="static/assets/plugins/visible/visible.js"></script>
+    <!--Fitvids-->
+    <script type="text/javascript" src="static/assets/plugins/fitvids/fitvids.js"></script>
+    <!-- Google Maps--> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl-EDTJ5_uU3zBIX7-wNTu-qSZr1DO5Dw"></script> 
+    <script type="text/javascript" src="static/assets/js/map.js"></script>
+    <!-- Recaptcha--> 
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- Contact--> 
+    <script src="static/assets/js/contact.js"></script>
+    <!-- switcher js -->
+    <script src="static/assets/js/switcher.js"></script>     
+    <!--Custom JS-->
+    <script src="static/assets/js/custom.js"></script>
+    <script>
+      new WOW().init();
+    </script>
+  </body>
+</html>
 {% endblock %}
 
-
 {% block scripts %}
-    <script src="static/scripts/jquery.validate.min.js"></script>
+<script src="static/scripts/jquery.validate.min.js"></script>
 {% endblock %}

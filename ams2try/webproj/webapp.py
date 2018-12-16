@@ -167,6 +167,54 @@ class WebApp(object):
             cur.close()
             db_con.close()
 
+    def changepassword(self, usr, newpwd,password):
+        db_json = json.load(open(WebApp.dbjson))
+        users = db_json['users']
+        index = 0
+        for u in users:
+            if u['username'] == usr :
+                if(db_json['users'][index]['password']==password):
+                    db_json['users'][index]['password'] = newpwd
+                    jsonFile = open(WebApp.dbjson, "w+")
+                    jsonFile.write(json.dumps(db_json, indent=4))
+                    jsonFile.close()
+                    return True
+                else:
+                    return False
+            index+=1
+    
+    def changeusername(self, usr, newusr,password):
+        db_json = json.load(open(WebApp.dbjson))
+        users = db_json['users']
+        index = 0
+        for u in users:
+            if u['username'] == usr :
+                if(db_json['users'][index]['password']==password):
+                    db_json['users'][index]['admin'] = newusr
+                    jsonFile = open(WebApp.dbjson, "w+")
+                    jsonFile.write(json.dumps(db_json, indent=4))
+                    jsonFile.close()
+                    return True
+                else:
+                    return False
+            index+=1
+        
+    def changeemail(self, usr, newemail,password):
+        db_json = json.load(open(WebApp.dbjson))
+        users = db_json['users']
+        index = 0
+        for u in users:
+            if u['username'] == usr :
+                if(db_json['users'][index]['password']==password):
+                    db_json['users'][index]['email'] = newemail
+                    jsonFile = open(WebApp.dbjson, "w+")
+                    jsonFile.write(json.dumps(db_json, indent=4))
+                    jsonFile.close()
+                    return True
+                else:
+                    return False
+            index+=1
+
     ########################################################################################################################
 #   Controllers
 
@@ -210,6 +258,7 @@ class WebApp(object):
                        'errors': True,
                    }
                    return self.render('criarevento.html', tparams)
+
     
     @cherrypy.expose
     def meventosa(self):
@@ -219,7 +268,7 @@ class WebApp(object):
         }
 
         return self.render('meventosa.html', tparams)
-
+        
     @cherrypy.expose
     def login(self, username=None, password=None):
         if username == None:

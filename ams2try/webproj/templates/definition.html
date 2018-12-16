@@ -1,7 +1,5 @@
-{% extends "organizador.html" %}
-{% extends "atleta.html" %}
-{% extends "pratocinador.html" %}
 {% block content %}
+{% extends 'organizador.html' %}
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -147,12 +145,12 @@
               <div class="form-group">
                     <div class=" panel-heading col-md-6 margin-bottom-40">
                          <h5 class="about-heading bold-font">Password Atual</h5>
-                        <input id="id_password" maxlength="254" placeholder="Password" name="password" type="text bold-font">
+                        <input id="id_password" maxlength="254" placeholder="Password" name="password" type="password">
                     </div>
 
                     <div class=" panel-heading col-md-6 margin-bottom-40">
                         <h5 class="about-heading bold-font">Definir Nova Password</h5>
-                        <input id="id_password" maxlength="254" name="newpassword" placeholder="New Password" type="text bold-font">
+                        <input id="id_password" maxlength="254" name="newpassword" placeholder="New Password" type="password">
                     </div>
 
                     <div class="panel-body">
