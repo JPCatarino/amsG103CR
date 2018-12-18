@@ -216,7 +216,7 @@ class WebApp(object):
             index+=1
 
     ########################################################################################################################
-#   Controllers
+    #Controllers
 
     @cherrypy.expose
     def index(self):
@@ -226,6 +226,52 @@ class WebApp(object):
         }
         return self.render('index.html', tparams)
 
+    #######################################################################################################
+    ## Estatisticas
+
+    @cherrypy.expose
+    def statics(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('statics.html', tparams)
+
+    #######################################################################################################
+    ## Mensagens
+
+    @cherrypy.expose
+    def mensagem(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('mensagem.html', tparams)
+
+    @cherrypy.expose
+    def writesms(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('writesms.html', tparams)
+
+    #######################################################################################################
+    ## Alertas
+
+    @cherrypy.expose
+    def alertas(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('alertas.html', tparams)
+
+
+
+    #######################################################################################################
+    ## Noticias
+
     @cherrypy.expose
     def noticias(self):
         tparams = {
@@ -233,6 +279,66 @@ class WebApp(object):
             'year': datetime.now().year,
         }
         return self.render('noticias.html', tparams)
+
+    @cherrypy.expose
+    def writenew(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('writenew.html', tparams)
+
+    @cherrypy.expose
+    def draftnew (self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('draftnew.html', tparams)
+
+    @cherrypy.expose
+    def trashnew (self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('trashnew.html', tparams)
+
+    @cherrypy.expose
+    def publishednew (self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('publishednew.html', tparams)
+
+
+    #####################################################################################################
+    ##Eventos
+    
+    @cherrypy.expose
+    def myevents(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('myevents.html', tparams)
+
+    @cherrypy.expose
+    def editevents(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('editevents.html', tparams)
+
+    @cherrypy.expose
+    def deleteevents(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('deleteevents.html', tparams)
 
     @cherrypy.expose
     def criarevento(self,nomeev=None,data=None,local=None,hora=None,nmax=None,insc=None):
@@ -268,6 +374,9 @@ class WebApp(object):
         }
 
         return self.render('meventosa.html', tparams)
+
+    ######################################################################################################
+    ## Acesso
         
     @cherrypy.expose
     def login(self, username=None, password=None):
@@ -313,7 +422,7 @@ class WebApp(object):
             self.do_regDB(usr, pwd, mail, typeu)
             raise cherrypy.HTTPRedirect("/")
 
-
+    ##################################################################################################
     @cherrypy.expose
     def shut(self):
         cherrypy.engine.exit()

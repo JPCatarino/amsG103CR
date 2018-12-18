@@ -95,7 +95,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a class="text-center" href="#">
+                            <a class="text-center" href="mensagem">
                                 <strong>Ler todas as mensagens</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
@@ -174,8 +174,8 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a class="text-center" href="#">
-                                <strong>Ver os meus eventos</strong>
+                            <a class="text-center" href="myevents">
+                                <strong> Ver os meus eventos</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
@@ -209,15 +209,6 @@
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Mensagem Enviada
-                                    <span class="pull-right text-muted small">27 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
                                     <i class="fa fa-upload fa-fw"></i> Pagamento Recebido
                                     <span class="pull-right text-muted small">47 minutes ago</span>
                                 </div>
@@ -225,7 +216,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a class="text-center" href="#">
+                            <a class="text-center" href="alertas">
                                 <strong>See All Alerts</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
@@ -275,19 +266,27 @@
                                 <li><a href="criarevento">Criar Evento</a></li>
 
                                 <li>
-                                    <a href="morris">Editar Evento</a>
+                                    <a href="editevents">Editar Evento</a>
                                 </li>
                                 <li>
-                                    <a href="flot">Cancelar Evento</a>
+                                    <a href="deleteevents">Cancelar Evento</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i>Estatisticas</a>
+                            <a href="statics"><i class="fa fa-table fa-fw"></i>Estatisticas</a>
                         </li>
                         <li>
                            <a href="noticias"><i class="fa fa-book fa-fw"></i>Noticias</a>
+                        </li>
+                        <li>
+                            <a href="/"><i class="fa fa-envelope fa-fw"></i>Notificações<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="mensagem">Mensagens</a></li>
+                                <li><a href="alertas">Alertas</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                     </ul>
                 </div>
@@ -457,11 +456,6 @@
                                     </span>
                                 </a>
                                 <a href="#" class="list-group-item">
-                                    <i class="fa fa-envelope fa-fw"></i> Mensagem Enviada
-                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
                                     <i class="fa fa-money fa-fw"></i> Pagamento Recebido
                                     <span class="pull-right text-muted small"><em>47 minutes ago</em>
                                     </span>
@@ -476,14 +470,9 @@
                                     <span class="pull-right text-muted small"><em>Yesterday</em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-envelope fa-fw"></i> Mensagem Enviada
-                                    <span class="pull-right text-muted small"><em>2 days ago</em>
-                                    </span>
-                                </a>
                             </div>
                             <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">See All Alerts</a>
+                            <a href="alertas" class="btn btn-default btn-block">See All Alerts</a>
                         </div>
                         <!-- /.panel-body -->
                     </div>

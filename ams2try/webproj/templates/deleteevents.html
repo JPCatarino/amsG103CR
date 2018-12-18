@@ -1,6 +1,6 @@
-{% extends "index.html" %}
-{% block content %}
+{% extends "organizador.html" %}
 
+{% block content %}
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -43,7 +43,8 @@
     <div class="wrapper">
       <!-- NAVBAR
         ============================== -->
-       <nav class="navbar navbar-default navbar-menu navbar-fixed-top js-navbar-top js-toggleClass">
+
+    <nav class="navbar navbar-default navbar-menu navbar-fixed-top js-navbar-top js-toggleClass">
                     <div class="container">
                       <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -52,74 +53,98 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         </button>
-                         <a class="navbar-brand" href="/">
-                          <h2><span class="logo-span"></span>Back</h2>
+                        <a class="navbar-brand" href="/">
+                          <h2><span class="logo-span"></span>My Account</h2>
                         </a>
                       </div>
-                      <!--/.nav-collapse -->
                     </div>
-                </nav>
-     
-      <!-- LogIn
-        =================================== -->
-      <div id="AlterarMail" class="p-top-90 p-bot-90 light-gray-bg2">
+    </nav>
+
+	
+	<div id="AlterarMail" class="p-top-90 p-bot-90 light-gray-bg2">
         <div class="container">
           <div class="row">
             <div class="col-md-8 center-block text-center wow fadeIn" data-wow-delay="0.30s">
-              <h2 class="about-heading bold-font">SignUp</h2>
+              <h2 class="about-heading bold-font">Cancelar Evento</h2>
               <div class="border-strip margin-bottom-40"></div>
               <div class="form-group">
-                <section id="loginForm">
-                <form action="login" method="post" class="form-horizontal">
-                  <h4>Use a local account to log in.</h4>
-                  <hr />
-                
-                <div class="form-group">
-                    <h5 for ="id_mail" class="about-heading bold-font">Email</h5>
-                    <div class="col-md-offset-3 col-md-6">
-                        <input id="id_mail" maxlength="254" name="username" type="text bold-font">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <h5 for ="id_username" class="about-heading bold-font">Username</h5>
-                    <div class="col-md-offset-3 col-md-6">
-                        <input id="id_username" name="password" type="password bold-font">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <h5 for ="id_password" class="about-heading bold-font">Password</h5>
-                    <div class="col-md-offset-3 col-md-6">
-                        <input id="id_password" name="password" type="password bold-font">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <h5 for ="id_type" class="about-heading bold-font">Tipo de Conta</h5>
-                    <div class="col-md-offset-3 col-md-6">
-                        <select name="typeu">
-                          <option value="Atleta">Atleta</option>
-                          <option value="Patrocinador">Patrocinador</option>
-                          <option value="Organizador">Organizador</option>
-                        </select>
-
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="col-md-offset-3 col-md-6">
-                        <input type="submit" value="SignUp" class="btn btn-default" />
-                    </div>
-                </div>
-                {% if errors %}
-                <p class="validation-summary-errors">Please enter a correct user name and password</p>
-                {% endif %}
-            </form>
-        </section>
-                </div>
+                    <div class=" panel-heading col-md-6 margin-bottom-1"></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+    <div id="page-wrapper">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-10 col-md-offset-1">
+                    <div class="panel panel-default">
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Nome</th>
+                                        <th>Local</th>
+                                        <th>Hora</th>
+                                        <th>Participantes</th>
+                                        <th>Cancelar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="odd gradeX">
+                                        <td>Trident</td>
+                                        <td>Internet Explorer 4.0</td>
+                                        <td>Win 95+</td>
+                                        <td class="center">4</td>
+                                        <td class="center">X</td>
+                                        <td class="center">X</td>
+                                    </tr>
+                                    <tr class="even gradeC">
+                                        <td>Trident</td>
+                                        <td>Internet Explorer 5.0</td>
+                                        <td>Win 95+</td>
+                                        <td class="center">5</td>
+                                        <td class="center">C</td>
+                                        <td class="center">X</td>
+                                    </tr>
+                                    <tr class="odd gradeA">
+                                        <td>Trident</td>
+                                        <td>Internet Explorer 5.5</td>
+                                        <td>Win 95+</td>
+                                        <td class="center">5.5</td>
+                                        <td class="center">A</td>
+                                        <td class="center">X</td>
+                                    </tr>
+                                    <tr class="even gradeA">
+                                        <td>Trident</td>
+                                        <td>Internet Explorer 6</td>
+                                        <td>Win 98+</td>
+                                        <td class="center">6</td>
+                                        <td class="center">A</td>
+                                        <td class="center">X</td>
+                                    </tr>
+                                    <tr class="odd gradeA">
+                                        <td>Trident</td>
+                                        <td>Internet Explorer 7</td>
+                                        <td>Win XP SP2+</td>
+                                        <td class="center">7</td>
+                                        <td class="center">A</td>
+                                        <td class="center">X</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+           </div>
+
       <!-- SCROLLTOP -->
       <div class="scroll-up">
         <a href="#totop"><i class="fa fa-angle-up"></i></a>

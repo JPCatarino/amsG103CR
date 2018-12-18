@@ -1,6 +1,6 @@
-{% extends "index.html" %}
-{% block content %}
+{% extends "mensagem.html" %}
 
+{% block content %}
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -43,7 +43,8 @@
     <div class="wrapper">
       <!-- NAVBAR
         ============================== -->
-       <nav class="navbar navbar-default navbar-menu navbar-fixed-top js-navbar-top js-toggleClass">
+
+    <nav class="navbar navbar-default navbar-menu navbar-fixed-top js-navbar-top js-toggleClass">
                     <div class="container">
                       <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -52,74 +53,64 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         </button>
-                         <a class="navbar-brand" href="/">
+                        <a class="navbar-brand" href="mensagem">
                           <h2><span class="logo-span"></span>Back</h2>
                         </a>
                       </div>
-                      <!--/.nav-collapse -->
                     </div>
                 </nav>
-     
-      <!-- LogIn
+      
+      <!-- Criar Evento
         =================================== -->
       <div id="AlterarMail" class="p-top-90 p-bot-90 light-gray-bg2">
         <div class="container">
           <div class="row">
             <div class="col-md-8 center-block text-center wow fadeIn" data-wow-delay="0.30s">
-              <h2 class="about-heading bold-font">SignUp</h2>
+              <h2 class="about-heading bold-font">Escrever Mensagem</h2>
               <div class="border-strip margin-bottom-40"></div>
               <div class="form-group">
-                <section id="loginForm">
-                <form action="login" method="post" class="form-horizontal">
-                  <h4>Use a local account to log in.</h4>
-                  <hr />
-                
-                <div class="form-group">
-                    <h5 for ="id_mail" class="about-heading bold-font">Email</h5>
-                    <div class="col-md-offset-3 col-md-6">
-                        <input id="id_mail" maxlength="254" name="username" type="text bold-font">
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Nome do Evento</h5>
+                      <input id="id_mail" maxlength="254" placeholder="Nome" name="mail" type="text bold-font" autofocus="">
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <h5 for ="id_username" class="about-heading bold-font">Username</h5>
-                    <div class="col-md-offset-3 col-md-6">
-                        <input id="id_username" name="password" type="password bold-font">
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Local</h5>
+                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Local" type="text bold-font" autofocus="">
                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <h5 for ="id_password" class="about-heading bold-font">Password</h5>
-                    <div class="col-md-offset-3 col-md-6">
-                        <input id="id_password" name="password" type="password bold-font">
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <h5 for ="id_type" class="about-heading bold-font">Tipo de Conta</h5>
-                    <div class="col-md-offset-3 col-md-6">
-                        <select name="typeu">
-                          <option value="Atleta">Atleta</option>
-                          <option value="Patrocinador">Patrocinador</option>
-                          <option value="Organizador">Organizador</option>
-                        </select>
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Data(dd-mm-aaaa)</h5>
+                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Data" type="text bold-font" autofocus="">
+                    </div>
 
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Hora</h5>
+                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Hora" type="text bold-font" autofocus="">
+                    </div>
+
+                    <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Número máximo de participantes</h5>
+                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Participantes" type="text bold-font" autofocus="">
+                    </div>
+
+                     <div class=" panel-heading col-md-6 margin-bottom-40">
+                      <h5 class="about-heading bold-font">Valor Inscrição</h5>
+                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Valor" type="text bold-font" autofocus="">
+                    </div>
+
+                    <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-default" />
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <div class="col-md-offset-3 col-md-6">
-                        <input type="submit" value="SignUp" class="btn btn-default" />
-                    </div>
+                    {% if errors %}
+                    <p class="validation-summary-errors">An error occured please repeat</p>
+                    {% endif %}
                 </div>
-                {% if errors %}
-                <p class="validation-summary-errors">Please enter a correct user name and password</p>
-                {% endif %}
-            </form>
-        </section>
-                </div>
+            </div>
         </div>
-      </div>
+
       <!-- SCROLLTOP -->
       <div class="scroll-up">
         <a href="#totop"><i class="fa fa-angle-up"></i></a>
