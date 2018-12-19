@@ -4,8 +4,15 @@ import os
 from datetime import datetime
 import psycopg2
 
+class Eventpast(object):
+    def __init__(self, id, nome, tempo):
+        self.id = id
+        self.nome = nome
+        self.tempo = tempo
+
+
 class Event(object):
-    def __init__(self,id,nome,data,hora,local,nmaxp,valor):
+    def __init__(self,id,nome,data,hora,local,nmaxp,valor,organizador=None,estado=None,patrocinado=None):
         self.id = id
         self.nome = nome
         self.data = data
@@ -13,6 +20,13 @@ class Event(object):
         self.local = local
         self.nmaxp = nmaxp
         self.valor = valor
+        if organizador != None:
+            self.organizador = organizador
+        if estado != None:
+            self.estado = estado
+        if patrocinado!= None:
+            self.patrocinado = patrocinado
+
 
 
 class WebApp(object):
@@ -69,55 +83,96 @@ class WebApp(object):
         return "no error"
 
     def get_eventos(self, usr):
-
+        events =[]
         if self.get_user()['type'] == 'Atleta':
             id_a = self.get_userid()
             db_con = self.db_connection()
             cur = db_con.cursor()
-            sql2 = "select id_evento from atletaevento where a_id = " + str(id_a) + " and estadopagamento='Pago'"
-            cur.execute(sql2)
-            id_event = cur.fetchone()
+            sql=" select E.id_evento, E.nomeevent, E.datae, E.hora, E.locale, E.nmaxp, E.valorinsc from atletaevento as AE join evento as E ON AE.id_evento= E.id_evento join atleta as A on AE.a_" \
+                "id=A.a_id where A.a_id =" + str(id_a) + "and AE.estadopagamento = 'Pago' and E.estado='Disponivel'"
 
-            for e in id_event:
-                sql3 = "select * from evento where id_evento = " + str(e[0]) + " and estado='Disponivel'"
-                cur.execute(sql3)
-                data = cur.fetchone()
-                cherrypy.session['event'] += [data]
+            cur.execute(sql)
+            data = cur.fetchone()
+            for d in data:
+                events.append(Event(d[0],d[1],d[2],d[3],d[4],d[5],d[6],d[7]))
+            self.get_user()["events"] = events
+
         elif self.get_user()['type'] == 'Organizador':
             id_o = self.get_userid()
             db_con = self.db_connection()
             cur = db_con.cursor()
-            sql2 = "select id_evento from organizadorevento where o_id = " + str(id_o)
-            cur.execute(sql2)
-            id_event = cur.fetchone()
-            for e in id_event:
-                sql3 = "select * from evento where id_evento = " + str(
-                    e[0]) + " and estado='Disponivel' or estado = 'Pendente'"
-                cur.execute(sql3)
-                data = cur.fetchone()
-                cherrypy.session['event'] += [data]
+            sql = " select E.id_evento, E.nomeevent, E.datae, E.hora, E.locale, E.nmaxp, E.valorinsc from organizadorevento as OE join evento as E ON OE.id_evento= E.id_evento join organizador as O on OE.o_" \
+                  "id=O.o_id where O.o_id =" + str(id_o)
+
+            cur.execute(sql)
+            data = cur.fetchone()
+
+            for d in data:
+                events.append(Event(d[0],d[1],d[2],d[3],d[4],d[5],d[6],d[7]))
+            self.get_user()["events"] = events
+
         elif self.get_user()['type'] == 'Patrocinador':
             id_p = self.get_userid()
             db_con = self.db_connection()
             cur = db_con.cursor()
-            sql2 = "select id_evento,valorpatrocinado,estadopedido from patrocinadorevento where p_id =" + id_p
-            cur.execute(sql2)
-            id_event = cur.fetchone()
-            for e in id_event:
-                sql3 = "select * from evento where id_evento = " + str(e[0]) + " and estado='Disponivel'"
-                cur.execute(sql3)
-                data = cur.fetchone()
-                cherrypy.session['event'] += [data]
 
+            sql = " select E.id_evento, E.nomeevent, E.datae, E.hora, E.locale, E.nmaxp, E.valorinsc,PE.estadopedido,PE.valorpatrocinado from patrocinadorevento as PE join evento as E ON PE.id_evento= E.id_evento join patrocinador as P on PE.p_" \
+                  "id=P.p_id where P.p_id =" + str(id_p)
+
+            cur.execute(sql)
+            data = cur.fetchone()
+            for d in data:
+                events.append(Event(d[0],d[7],d[1],d[2],d[3],d[4],d[5],d[6],d[7],d[8]))
+            self.get_user()["events"] = events
         cur.close()
         db_con.close()
-        return cherrypy.session['event']
+        return self.get_user()["events"]
+
+    def set_events(self):
+        events=[]
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        sql = "select E.id_event,E.nomeevent,E.datae,E.hora,E.locale,E.nmaxp,E.valorinsc,O.o_id,E.estado from evento AS E JOIN organizadorevento as OE ON E.id_evento = OE.id_evento  JOIN organizador AS O on OE.o_id=O.o_id"
+        cur.execute(sql)
+        data= cur.fetchone()
+        for d in data:
+            events.append(Event(d[0],d[1],d[2],d[3],d[4],d[5],d[6],d[7],d[8]))
+        cherrypy.session["event"] = events
+
+    def get_historicoatleta(self):
+        events = []
+        if self.get_user()['type'] == 'Atleta':
+            id_a = self.get_userid()
+            db_con = self.db_connection()
+            cur = db_con.cursor()
+            sql = " select E.id_evento, E.nomeevent, ATE.tempo  from atletaevento as AE join evento as E ON AE.id_evento= E.id_evento join atleta as A on AE.a_" \
+                  "id=A.a_id join atletasensor as ASE ON E.id_evento= ASE.id_evento and A.a_id = ASE.a_id join atletatempo " \
+                  "as ATE on ASE.id_evento = ATE.id_evento and ASE.nsensor = ATE.nsensor  where A.a_id =" + str(id_a) + "and E.estado='Terminado'"
+
+            cur.execute(sql)
+            data = cur.fetchone()
+            for d in data:
+                events.append(Eventpast(d[0],d[1],d[2]))
+            self.get_user()["historico"] = events
+
+    def get_noticias(self):
+        noticias = []
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        sql = "select texto from noticias"
+        cur.execute(sql)
+        data = cur.fetchone()
+        for d in data:
+            noticias.append(d)
+        cherrypy.session["noticias"] = noticias
+        return cherrypy.session["noticias"]
 
     def set_user(self, username=None, type=None):
         if username == None or username == '':
-            cherrypy.session['user'] = {'is_authenticated': False, 'username': '', 'type': ''}
+            cherrypy.session['user'] = {'is_authenticated': False, 'username': '', 'type': '', 'events':None, "historico":None}
         else:
-            cherrypy.session['user'] = {'is_authenticated': True, 'username': username, 'type': type}
+            cherrypy.session['user'] = {'is_authenticated': True, 'username': username, 'type': type, 'events': None,
+                                        "historico": None}
 
     def get_user(self):
         if not 'user' in cherrypy.session:
@@ -172,56 +227,28 @@ class WebApp(object):
             cur.close()
             db_con.close()
 
-    def changepassword(self, usr, newpwd, password):
-        db_json = json.load(open(WebApp.dbjson))
-        users = db_json['users']
-        index = 0
-        for u in users:
-            if u['username'] == usr:
-                if (db_json['users'][index]['password'] == password):
-                    db_json['users'][index]['password'] = newpwd
-                    jsonFile = open(WebApp.dbjson, "w+")
-                    jsonFile.write(json.dumps(db_json, indent=4))
-                    jsonFile.close()
-                    return True
-                else:
-                    return False
-            index += 1
+    def changepassword(self,newpwd):
+        db_con = self.db_connection()
+        sql = "UPDATE utilizador SET pwd =" + newpwd + " Where utilizador ="+ self.get_user()["username"]
+        cur = db_con.cursor()
+        cur.execute(sql)
+        db_con.commit()
+        cur.close()
+        db_con.close()
 
-    def changeusername(self, usr, newusr, password):
-        db_json = json.load(open(WebApp.dbjson))
-        users = db_json['users']
-        index = 0
-        for u in users:
-            if u['username'] == usr:
-                if (db_json['users'][index]['password'] == password):
-                    db_json['users'][index]['admin'] = newusr
-                    jsonFile = open(WebApp.dbjson, "w+")
-                    jsonFile.write(json.dumps(db_json, indent=4))
-                    jsonFile.close()
-                    return True
-                else:
-                    return False
-            index += 1
 
-    def changeemail(self, usr, newemail, password):
-        db_json = json.load(open(WebApp.dbjson))
-        users = db_json['users']
-        index = 0
-        for u in users:
-            if u['username'] == usr:
-                if (db_json['users'][index]['password'] == password):
-                    db_json['users'][index]['email'] = newemail
-                    jsonFile = open(WebApp.dbjson, "w+")
-                    jsonFile.write(json.dumps(db_json, indent=4))
-                    jsonFile.close()
-                    return True
-                else:
-                    return False
-            index += 1
+    def changeemail(self,newemail):
+        db_con = self.db_connection()
+        sql = "UPDATE utilizador SET mail =" + newemail + " Where utilizador =" + self.get_user()["username"]
+        cur = db_con.cursor()
+        cur.execute(sql)
+        db_con.commit()
+        cur.close()
+        db_con.close()
+
 
     ########################################################################################################################
-    # Controllers
+    # Controller
 
     @cherrypy.expose
     def index(self):
