@@ -154,7 +154,16 @@ class WebApp(object):
             for d in data:
                 events.append(Eventpast(d[0],d[1],d[2]))
             self.get_user()["historico"] = events
-
+    def set_noticias(self,text):
+        user = self.get_user()["username"]
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        sql = "Insert into noticias(texto,username) values("+ text+"," + user + ")"
+        cur.execute(sql)
+        db_con.commit()
+        cur.close()
+        db_con.close()
+        
     def get_noticias(self):
         noticias = []
         db_con = self.db_connection()
