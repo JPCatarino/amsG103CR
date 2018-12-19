@@ -5,7 +5,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <meta charset="utf-8    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewpor" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -62,7 +62,8 @@
       
       <!-- Criar Evento
         =================================== -->
-      <div id="AlterarMail" class="p-top-90 p-bot-90 light-gray-bg2">
+    <form action="criarevento" method="post" class="form-horizontal">
+      <div id="criarev" class="p-top-90 p-bot-90 light-gray-bg2">
         <div class="container">
           <div class="row">
             <div class="col-md-8 center-block text-center wow fadeIn" data-wow-delay="0.30s">
@@ -71,32 +72,32 @@
               <div class="form-group">
                     <div class=" panel-heading col-md-6 margin-bottom-40">
                       <h5 class="about-heading bold-font">Nome do Evento</h5>
-                      <input id="id_mail" maxlength="254" placeholder="Nome" name="mail" type="text bold-font" autofocus="">
+                      <input id="id_nome" maxlength="254" placeholder="Nome" name="nomeev" type="text bold-font" autofocus="">
                     </div>
 
                     <div class=" panel-heading col-md-6 margin-bottom-40">
                       <h5 class="about-heading bold-font">Local</h5>
-                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Local" type="text bold-font" autofocus="">
+                      <input id="id_local" maxlength="254" name="local" placeholder="Local" type="text bold-font" autofocus="">
                     </div>
 
                     <div class=" panel-heading col-md-6 margin-bottom-40">
                       <h5 class="about-heading bold-font">Data(dd-mm-aaaa)</h5>
-                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Data" type="text bold-font" autofocus="">
+                      <input id="id_data" maxlength="254" name="data" placeholder="Data" type="text bold-font" autofocus="">
                     </div>
 
                     <div class=" panel-heading col-md-6 margin-bottom-40">
                       <h5 class="about-heading bold-font">Hora</h5>
-                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Hora" type="text bold-font" autofocus="">
+                      <input id="id_hora" maxlength="254" name="hora" placeholder="Hora" type="text bold-font" autofocus="">
                     </div>
 
                     <div class=" panel-heading col-md-6 margin-bottom-40">
                       <h5 class="about-heading bold-font">Número máximo de participantes</h5>
-                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Participantes" type="text bold-font" autofocus="">
+                      <input id="id_nmax" maxlength="254" name="nmax" placeholder="Participantes" type="text bold-font" autofocus="">
                     </div>
 
                      <div class=" panel-heading col-md-6 margin-bottom-40">
                       <h5 class="about-heading bold-font">Valor Inscrição</h5>
-                      <input id="id_mail" maxlength="254" name="newmail" placeholder="Valor" type="text bold-font" autofocus="">
+                      <input id="id_insc" maxlength="254" name="insc" placeholder="Valor" type="text bold-font" autofocus="">
                     </div>
 
                     <div class="form-group">
@@ -110,6 +111,9 @@
                 </div>
             </div>
         </div>
+        </div>
+      </div>
+    </form>
 
       <!-- SCROLLTOP -->
       <div class="scroll-up">

@@ -357,7 +357,7 @@ class WebApp(object):
             if self.get_user()['is_authenticated']:
                 error = self.criarevent(nomeev, data, local, hora, nmax, insc)
                 if error == "no error":
-                    raise cherrypy.HTTPRedirect("/Organizador")
+                    raise cherrypy.HTTPRedirect("/")
                 else:
                     tparams = {
                         'title': 'CriarEvento',
