@@ -159,11 +159,11 @@ class WebApp(object):
         noticias = []
         db_con = self.db_connection()
         cur = db_con.cursor()
-        sql = "select texto from noticias"
+        sql = "select texto,username from noticias"
         cur.execute(sql)
         data = cur.fetchone()
         for d in data:
-            noticias.append(d)
+            noticias.append((d[0],d[1]))
         cherrypy.session["noticias"] = noticias
         return cherrypy.session["noticias"]
 
