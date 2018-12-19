@@ -158,12 +158,12 @@ class WebApp(object):
         user = self.get_user()["username"]
         db_con = self.db_connection()
         cur = db_con.cursor()
-        sql = "Insert into noticias(texto,username) values("+ text+"," + user + ")"
+        sql = "Insert into noticias(texto,username) values('"+ str(text)+"','" + str(user) + "')"
         cur.execute(sql)
         db_con.commit()
         cur.close()
         db_con.close()
-        
+
     def get_noticias(self):
         noticias = []
         db_con = self.db_connection()
@@ -320,12 +320,16 @@ class WebApp(object):
         return self.render('noticias.html', tparams)
 
     @cherrypy.expose
-    def writenew(self):
-        tparams = {
-            'user': self.get_user(),
-            'year': datetime.now().year,
-        }
-        return self.render('writenew.html', tparams)
+    def writenew(self,local=None):
+        if local != None:
+            self.set_noticias(local)
+            raise cherrypy.HTTPRedirect("noticias")
+        else:
+            tparams = {
+                'user': self.get_user(),
+                'year': datetime.now().year,
+            }
+            return self.render('writenew.html', tparams)
 
     @cherrypy.expose
     def draftnew(self):
