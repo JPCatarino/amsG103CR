@@ -4,6 +4,16 @@ import os
 from datetime import datetime
 import psycopg2
 
+class Event(object):
+    def __init__(self,id,nome,data,hora,local,nmaxp,valor):
+        self.id = id
+        self.nome = nome
+        self.data = data
+        self.hora = hora
+        self.local = local
+        self.nmaxp = nmaxp
+        self.valor = valor
+
 
 class WebApp(object):
     def __init__(self):
@@ -33,7 +43,7 @@ class WebApp(object):
         db_con.close()
         return idu[0]
 
-    def criarevento(self, nomeev, data, local, hora, nmax, insc):
+    def criarevent(self, nomeev, data, local, hora, nmax, insc):
         try:
             if (nomeev != '' or nomeev is not None) and (data != '' or data is not None) and (
                     local != '' or local is not None) \
