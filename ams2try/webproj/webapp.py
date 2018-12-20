@@ -154,9 +154,7 @@ class WebApp(object):
             for d in data:
                 events.append(Eventpast(d[0],d[1],d[2]))
             self.get_user()["historico"] = events
-<<<<<<< HEAD
-    
-=======
+
     def set_noticias(self,text):
         user = self.get_user()["username"]
         db_con = self.db_connection()
@@ -178,7 +176,7 @@ class WebApp(object):
             noticias.append((d[0],d[1]))
         cherrypy.session["noticias"] = noticias
         return cherrypy.session["noticias"]
->>>>>>> b9fdc23656f4177f28588fdf0fad3ee3ebaa986d
+
 
     def set_user(self, username=None, type=None):
         if username == None or username == '':
