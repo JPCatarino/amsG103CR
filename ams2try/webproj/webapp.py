@@ -154,7 +154,6 @@ class WebApp(object):
             for d in data:
                 events.append(Eventpast(d[0],d[1],d[2]))
             self.get_user()["historico"] = events
-
     def set_noticias(self,text):
         user = self.get_user()["username"]
         db_con = self.db_connection()
@@ -176,7 +175,6 @@ class WebApp(object):
             noticias.append((d[0],d[1]))
         cherrypy.session["noticias"] = noticias
         return cherrypy.session["noticias"]
-
 
     def set_user(self, username=None, type=None):
         if username == None or username == '':
@@ -356,28 +354,6 @@ class WebApp(object):
             'year': datetime.now().year,
         }
         return self.render('publishednew.html', tparams)
-
-    def set_noticias(self,text):
-        user = self.get_user()["username"]
-        db_con = self.db_connection()
-        cur = db_con.cursor()
-        sql = "Insert into noticias(texto,username) values("+ text+"," + user + ")"
-        cur.execute(sql)
-        db_con.commit()
-        cur.close()
-        db_con.close()
-        
-    def get_noticias(self):
-        noticias = []
-        db_con = self.db_connection()
-        cur = db_con.cursor()
-        sql = "select texto,username from noticias"
-        cur.execute(sql)
-        data = cur.fetchone()
-        for d in data:
-            noticias.append((d[0],d[1]))
-        cherrypy.session["noticias"] = noticias
-        return cherrypy.session["noticias"]
 
     #####################################################################################################
     ##Eventos
