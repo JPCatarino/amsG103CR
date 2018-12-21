@@ -35,7 +35,7 @@ public class CreateEvent1 {
     driver.findElement(By.linkText("Criar Evento")).click();
     driver.findElement(By.id("id_nome")).click();
     driver.findElement(By.id("id_nome")).clear();
-    driver.findElement(By.id("id_nome")).sendKeys("nEvent");
+    driver.findElement(By.id("id_nome")).sendKeys("nEvent" + (Math.random() * ((2147483640 - 0) + 1)) + 0);
     driver.findElement(By.id("id_local")).clear();
     driver.findElement(By.id("id_local")).sendKeys("Porto");
     driver.findElement(By.id("id_data")).click();
