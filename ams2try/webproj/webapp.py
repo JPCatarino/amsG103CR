@@ -20,12 +20,31 @@ class Event(object):
         self.local = local
         self.nmaxp = nmaxp
         self.valor = valor
+
         if organizador != None:
             self.organizador = organizador
+
         if estado != None:
             self.estado = estado
+
         if patrocinado!= None:
             self.patrocinado = patrocinado
+
+    def __dict__(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "data": self.data,
+            "hora": self.hora,
+            "local": self.local,
+            "nmaxp": self.nmaxp,
+            "valor": self.valor,
+            "estado": self.estado
+            
+        }
+
+    def tolist(self):
+        return (self.id, self.nome, self.data, self.hora, self.local, self.nmaxp, self.valor, self.estado)
 
 
 
@@ -38,10 +57,12 @@ class WebApp(object):
 
     ########################################################################################################################
     #   Utilities
+   
     def get_userid(self):
 
         db_con = self.db_connection()
         cur = db_con.cursor()
+
         if self.get_user()['type'] == 'Atleta':
             sql1 = "select a_id from atleta where username = '" + self.get_user()['username'] + "'"
             cur.execute(sql1)
@@ -51,93 +72,14 @@ class WebApp(object):
         elif self.get_user()['type'] == 'Patrocinador':
             sql1 = "select p_id from patrocinador where username = '" + self.get_user()['username'] + "'"
             cur.execute(sql1)
+        else: 
+            print("INTERNAL ERROR. USER TYPE NOT SPECIFIED. Are you loggedin?")
+
         idu = cur.fetchone()
 
         cur.close()
         db_con.close()
         return idu[0]
-
-    def criarevent(self, nomeev, data, local, hora, nmax, insc):
-        try:
-            if (nomeev != '' or nomeev is not None) and (data != '' or data is not None) and (
-                    local != '' or local is not None) \
-                    and (hora != '' or hora is not None) and (nmax != '' or nmax is not None) and (
-                    insc != '' or insc is not None):
-                id_o = self.get_userid()
-                db_con = self.db_connection()
-                cur = db_con.cursor()
-                sql = "INSERT INTO evento(nomeevent,datae,hora,locale,nmaxp,valorinsc,estado) VALUES ('" + nomeev + "','" + data + "','" + hora + "','" + local + "'," + str(
-                    nmax) + "," + str(insc) + ",'" + 'pendente' + "')"
-                cur.execute(sql)
-                db_con.commit()
-                sql2 = "select id_evento from evento where nomeevent = '" + nomeev + "'"
-                cur.execute(sql2)
-                id_e = cur.fetchone()
-                sql3 = "INSERT INTO organizadorevento(o_id,id_evento) VALUES (" + str(id_o) + "," + str(id_e[0]) + ")"
-                cur.execute(sql3)
-                db_con.commit()
-        except psycopg2.Error as e:
-            return e
-        cur.close()
-        db_con.close()
-        return "no error"
-
-    def get_eventos(self, usr):
-        events =[]
-        if self.get_user()['type'] == 'Atleta':
-            id_a = self.get_userid()
-            db_con = self.db_connection()
-            cur = db_con.cursor()
-            sql=" select E.id_evento, E.nomeevent, E.datae, E.hora, E.locale, E.nmaxp, E.valorinsc from atletaevento as AE join evento as E ON AE.id_evento= E.id_evento join atleta as A on AE.a_" \
-                "id=A.a_id where A.a_id =" + str(id_a) + "and AE.estadopagamento = 'Pago' and E.estado='Disponivel'"
-
-            cur.execute(sql)
-            data = cur.fetchone()
-            for d in data:
-                events.append(Event(d[0],d[1],d[2],d[3],d[4],d[5],d[6],d[7]))
-            self.get_user()["events"] = events
-
-        elif self.get_user()['type'] == 'Organizador':
-            id_o = self.get_userid()
-            db_con = self.db_connection()
-            cur = db_con.cursor()
-            sql = " select E.id_evento, E.nomeevent, E.datae, E.hora, E.locale, E.nmaxp, E.valorinsc from organizadorevento as OE join evento as E ON OE.id_evento= E.id_evento join organizador as O on OE.o_" \
-                  "id=O.o_id where O.o_id =" + str(id_o)
-
-            cur.execute(sql)
-            data = cur.fetchone()
-
-            for d in data:
-                events.append(Event(d[0],d[1],d[2],d[3],d[4],d[5],d[6],d[7]))
-            self.get_user()["events"] = events
-
-        elif self.get_user()['type'] == 'Patrocinador':
-            id_p = self.get_userid()
-            db_con = self.db_connection()
-            cur = db_con.cursor()
-
-            sql = " select E.id_evento, E.nomeevent, E.datae, E.hora, E.locale, E.nmaxp, E.valorinsc,PE.estadopedido,PE.valorpatrocinado from patrocinadorevento as PE join evento as E ON PE.id_evento= E.id_evento join patrocinador as P on PE.p_" \
-                  "id=P.p_id where P.p_id =" + str(id_p)
-
-            cur.execute(sql)
-            data = cur.fetchone()
-            for d in data:
-                events.append(Event(d[0],d[7],d[1],d[2],d[3],d[4],d[5],d[6],d[7],d[8]))
-            self.get_user()["events"] = events
-        cur.close()
-        db_con.close()
-        return self.get_user()["events"]
-
-    def set_events(self):
-        events=[]
-        db_con = self.db_connection()
-        cur = db_con.cursor()
-        sql = "select E.id_event,E.nomeevent,E.datae,E.hora,E.locale,E.nmaxp,E.valorinsc,O.o_id,E.estado from evento AS E JOIN organizadorevento as OE ON E.id_evento = OE.id_evento  JOIN organizador AS O on OE.o_id=O.o_id"
-        cur.execute(sql)
-        data= cur.fetchone()
-        for d in data:
-            events.append(Event(d[0],d[1],d[2],d[3],d[4],d[5],d[6],d[7],d[8]))
-        cherrypy.session["event"] = events
 
     def get_historicoatleta(self):
         events = []
@@ -154,27 +96,6 @@ class WebApp(object):
             for d in data:
                 events.append(Eventpast(d[0],d[1],d[2]))
             self.get_user()["historico"] = events
-    def set_noticias(self,text):
-        user = self.get_user()["username"]
-        db_con = self.db_connection()
-        cur = db_con.cursor()
-        sql = "Insert into noticias(texto,username) values('"+ str(text)+"','" + str(user) + "')"
-        cur.execute(sql)
-        db_con.commit()
-        cur.close()
-        db_con.close()
-
-    def get_noticias(self):
-        noticias = []
-        db_con = self.db_connection()
-        cur = db_con.cursor()
-        sql = "select texto,username from noticias"
-        cur.execute(sql)
-        data = cur.fetchone()
-        for d in data:
-            noticias.append((d[0],d[1]))
-        cherrypy.session["noticias"] = noticias
-        return cherrypy.session["noticias"]
 
     def set_user(self, username=None, type=None):
         if username == None or username == '':
@@ -297,6 +218,7 @@ class WebApp(object):
         }
         return self.render('writesms.html', tparams)
 
+
     #######################################################################################################
     ## Alertas
 
@@ -313,11 +235,23 @@ class WebApp(object):
 
     @cherrypy.expose
     def noticias(self):
+        noticias = self.get_noticias()
         tparams = {
             'user': self.get_user(),
             'year': datetime.now().year,
+            'news': noticias
         }
         return self.render('noticias.html', tparams)
+
+    @cherrypy.expose
+    def noticiasatleta(self):
+        noticias = self.get_noticias()
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+            'news': noticias
+        }
+        return self.render('noticiasatleta.html', tparams)
 
     @cherrypy.expose
     def writenew(self,local=None):
@@ -349,28 +283,94 @@ class WebApp(object):
 
     @cherrypy.expose
     def publishednew(self):
+        #current_user = self.get_user()
+        noticias = self.get_noticias_user(self.get_user()["username"])
         tparams = {
             'user': self.get_user(),
             'year': datetime.now().year,
+            'news': noticias
         }
         return self.render('publishednew.html', tparams)
+
+    def set_noticias(self,text):
+        user = self.get_user()["username"]
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        sql = "Insert into noticias(texto,username) values('"+ str(text)+"','" + str(user) + "')"
+        cur.execute(sql)
+        db_con.commit()
+        cur.close()
+        db_con.close()
+
+    def get_noticias_user(self, username):
+        noticias = []
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        sql = "select texto,username from noticias WHERE username='{}'".format(username)
+        print("QUERY:::: " + str(sql))
+        cur.execute(sql)
+        data = cur.fetchall()
+
+        for d in data:
+            noticias.append((d[0],d[1]))
+
+        cherrypy.session["noticias"] = noticias
+        return cherrypy.session["noticias"]
+    
+    def get_noticias(self):
+        noticias = []
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        sql = "select texto,username from noticias"
+        cur.execute(sql)
+        data = cur.fetchall()
+        for d in data:
+            noticias.append((d[0],d[1]))
+        cherrypy.session["noticias"] = noticias
+        return cherrypy.session["noticias"]
 
     #####################################################################################################
     ##Eventos
 
     @cherrypy.expose
     def myevents(self):
+        self.set_events()
+        eventos =  cherrypy.session["event"]
+        rtn_list = [d.tolist() for d in eventos if d != None]
+        print("RTN: " + str(rtn_list))
+
         tparams = {
             'user': self.get_user(),
             'year': datetime.now().year,
+            'events': rtn_list
         }
         return self.render('myevents.html', tparams)
 
     @cherrypy.expose
-    def editevents(self):
+    def allevents(self):
+        self.set_events()
+        eventos =  cherrypy.session["event"]
+        rtn_list = [d.tolist() for d in eventos if d != None]
+        print("RTN: " + str(rtn_list))
+
         tparams = {
             'user': self.get_user(),
             'year': datetime.now().year,
+            'events': rtn_list
+        }
+        return self.render('allevents.html', tparams)
+
+
+    @cherrypy.expose
+    def editevents(self):
+        self.set_events()
+        eventos = cherrypy.session["event"]
+        rtn_list = [d.tolist() for d in eventos if d != None]
+        print("RTN: " + str(rtn_list))
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+            'events': rtn_list
         }
         return self.render('editevents.html', tparams)
 
@@ -381,6 +381,24 @@ class WebApp(object):
             'year': datetime.now().year,
         }
         return self.render('deleteevents.html', tparams)
+
+    @cherrypy.expose
+    def inscrever(self):
+        tparams = {
+            'user': self.get_user(),
+            'year': datetime.now().year,
+        }
+        return self.render('inscrever.html', tparams)
+
+    def insc_event(self,id_evento):
+        id= self.get_userid()
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        sql = "Insert into atletaevento(a_id,id_evento,estadoPagamento) values('"+ str(id)+"','" + str(id_evento) + "','Pendente')"
+        cur.execute(sql)
+        db_con.commit()
+        cur.close()
+        db_con.close()
 
     @cherrypy.expose
     def criarevento(self, nomeev=None, data=None, local=None, hora=None, nmax=None, insc=None):
@@ -415,6 +433,103 @@ class WebApp(object):
         }
 
         return self.render('meventosa.html', tparams)
+
+
+    def criarevent(self, nomeev, data, local, hora, nmax, insc):
+        try:
+            if (nomeev != '' or nomeev is not None) and (data != '' or data is not None) and (
+                    local != '' or local is not None) \
+                    and (hora != '' or hora is not None) and (nmax != '' or nmax is not None) and (
+                    insc != '' or insc is not None):
+                id_o = self.get_userid()
+                db_con = self.db_connection()
+                cur = db_con.cursor()
+                sql = "INSERT INTO evento(nomeevent,datae,hora,locale,nmaxp,valorinsc,estado) VALUES ('" + nomeev + "','" + data + "','" + hora + "','" + local + "'," + str(
+                    nmax) + "," + str(insc) + ",'" + 'pendente' + "')"
+                cur.execute(sql)
+                db_con.commit()
+                sql2 = "select id_evento from evento where nomeevent = '" + nomeev + "'"
+                cur.execute(sql2)
+                id_e = cur.fetchone()
+                sql3 = "INSERT INTO organizadorevento(o_id,id_evento) VALUES (" + str(id_o) + "," + str(id_e[0]) + ")"
+                cur.execute(sql3)
+                db_con.commit()
+        except psycopg2.Error as e:
+            return e
+        cur.close()
+        db_con.close()
+        return "no error"
+
+   
+    def get_eventos(self, usr):
+        events =[]
+        id_a = self.get_userid()
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+
+        if self.get_user()['type'] == 'Atleta':
+            
+            sql=" select E.id_evento, E.datae, E.hora, E.locale, E.nmaxp, E.valorinsc, E.nomeevent from atletaevento as AE join evento as E ON AE.id_evento= E.id_evento join atleta as A on AE.a_" \
+                "id=A.a_id where A.a_id =" + str(id_a) + "and AE.estadopagamento = 'Pago' and E.estado='Disponivel'"
+
+            cur.execute(sql)
+            data = cur.fetchall()
+
+            for d in data:
+                events.append(Event(d[0],d[1],d[2],d[3],d[4],d[5],d[6]))
+            self.get_user()["events"] = events
+
+        elif self.get_user()['type'] == 'Organizador':
+            id_o = self.get_userid()
+            db_con = self.db_connection()
+            cur = db_con.cursor()
+            sql = " select E.id_evento, E.nomeevent, E.datae, E.hora, E.locale, E.valorinsc, E.nmaxp, E.estado from organizadorevento as OE join evento as E ON OE.id_evento= E.id_evento join organizador as O on OE.o_" \
+                  "id=O.o_id where O.o_id =" + str(id_o)
+
+            cur.execute(sql)
+            data = cur.fetchall()
+            print("FETCH RESULT: " + str(data))
+
+            for d in data:
+                events.append(Event(d[0],d[1],d[2],d[3],d[4],d[5],d[6],d[7]))
+
+            self.get_user()["events"] = events
+
+        elif self.get_user()['type'] == 'Patrocinador':
+            id_p = self.get_userid()
+            db_con = self.db_connection()
+            cur = db_con.cursor()
+
+            sql = " select E.id_evento, E.nomeevent, E.datae, E.hora, E.locale, E.nmaxp, E.valorinsc,PE.estadopedido,PE.valorpatrocinado from patrocinadorevento as PE join evento as E ON PE.id_evento= E.id_evento join patrocinador as P on PE.p_" \
+                  "id=P.p_id where P.p_id =" + str(id_p)
+
+            cur.execute(sql)
+            data = cur.fetchall()
+            print("DATA: " + str(data))
+            for d in data:
+                events.append(Event(d[0],d[6],d[1],d[2],d[3],d[4],d[5],d[6],d[6],d[7]))
+
+            self.get_user()["events"] = events
+        cur.close()
+        db_con.close()
+
+        self.get_user()["events"] = events
+        print("TESTTTTT:::: " + str(self.get_user()["events"]))
+        #return self.get_user()["events"]
+        print ("EVENTOS: " +str(events))
+        return events
+
+    
+    def set_events(self):
+        events=[]
+        db_con = self.db_connection()
+        cur = db_con.cursor()
+        sql = "select E.id_evento,E.datae,E.hora,E.locale,E.nmaxp,E.valorinsc,O.o_id,E.estado,E.nomeevent from evento AS E JOIN organizadorevento as OE ON E.id_evento = OE.id_evento  JOIN organizador AS O on OE.o_id=O.o_id"
+        cur.execute(sql)
+        data= cur.fetchall()
+        for d in data:
+            events.append(Event(d[0],d[8],d[1],d[2],d[3],d[4],d[5],d[6],d[7]))
+        cherrypy.session["event"] = events
 
     ######################################################################################################
     ## Acesso
